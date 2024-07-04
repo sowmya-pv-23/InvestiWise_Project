@@ -5,39 +5,52 @@ import numpy as np
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 import torch
 import os
+import pandas as pd
+
 
 st.set_page_config(page_title="InvestiWise",
                    layout="wide",
                    page_icon=" ")
+
 placeholder = st.image(r"C:\Users\sowmy\Downloads\istockphoto-1297492947-612x612.jpg")
 
-working_dir = os.path.dirname(os.path.abspath(__file__))
 
+# working_dir = os.path.dirname(os.path.abspath(__file__))
+# rule_based_path = os.path.join(working_dir, 'rule_based.py')
+# from rule_based import predict_investment_risk
 # st.image(r"C:\Users\sowmy\Downloads\istockphoto-1297492947-612x612.jpg")
 # st.sidebar.title("Enter the credentials")
 # st.sidebar.text_input("Enter user name")
 # st.sidebar.text_input("Password")
 # st.sidebar.button("login")
-credit_rate = pickle.load(open(f'{working_dir}/models/Credit_rating _model.pkl', 'rb'))
-# encoder=  pickle.load(open(f'{working_dir}//models/encoder.pkl', 'rb'))
-scaler = pickle.load(open(f'{working_dir}/models/min_max_scaler.pkl', 'rb'))
-model_path = os.path.join(working_dir, 'models/saved_model')
-tokenizer_path = os.path.join(working_dir, 'models/DistilBert_Tokenizer')
-invest = pickle.load(open(f'{working_dir}/models/investment_risk_model.pkl', 'rb'))
-with st.sidebar:
-    selected = option_menu("Comprehensive Investment Risk Analysis",
-                           ['InvestiWise:',
-                            'Investment Risk Prediction',
-                            'View Company Details',
-                            'Performance Analysis'],
-                           icons=['', 'graph-up-arrow', 'file-text', 'bar-chart'],
-                           default_index=0
-                           )
-if selected == 'InvestiWise':
-# st.write("hbfjfkgbfgb")
+# credit_rate = pickle.load(open(f'{working_dir}/models/Credit_rating _model.pkl', 'rb'))
+# scaler = pickle.load(open(f'{working_dir}/models/min_max_scaler.pkl', 'rb'))
+# model_path = os.path.join(working_dir, 'models/saved_model')
+# tokenizer_path = os.path.join(working_dir, 'models/DistilBert_Tokenizer')
+# df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
+# with st.sidebar:
+#     selected = option_menu("Comprehensive Investment Risk Analysis",
+#                            ['InvestiWise:',
+#                             'Investment Risk Prediction',
+#                             'Data Viewer',
+#                             'Performance Analysis'],
+#                            icons=['', 'graph-up-arrow', 'file-text', 'bar-chart'],
+#                            default_index=0
+#                            )
+def home():
+    st.title("InvestiWise")
+    st.write("Welcome to InvestiWise: A sustainable Investment Dashboard")
+    placeholder = st.image(r"C:\Users\sowmy\Downloads\istockphoto-1297492947-612x612.jpg")
 
 
-if selected == 'Investment Risk Prediction':
+def investment_risk_prediction():
+    working_dir = os.path.dirname(os.path.abspath(__file__))
+    rule_based_path = os.path.join(working_dir, 'rule_based.py')
+    from rule_based import predict_investment_risk
+    credit_rate = pickle.load(open(f'{working_dir}/Models/Credit_rating _model.pkl', 'rb'))
+    scaler = pickle.load(open(f'{working_dir}/Models/min_max_scaler.pkl', 'rb'))
+    model_path = os.path.join(working_dir, 'Models/saved_model')
+    tokenizer_path = os.path.join(working_dir, 'Models/DistilBert_Tokenizer')
     placeholder.empty()
     st.title('Investment Risk Prediction using ML')
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -63,7 +76,7 @@ if selected == 'Investment Risk Prediction':
             Risk_Premium = st.slider('Risk Premium', 0.00, 15.00)
         else:
             st.warning('Change the Market type to Developed Markets')
-    elif Market == 'Developed Markets':
+    if Market == 'Developed Markets':
         if Region == 'Americas':
             Country_risk_market_return = st.slider('Country Risk Market Return', 0.0, 15.00)
             Country_risk_premium = st.slider('Country Risk Premium', 0.0, 15.0)
@@ -104,7 +117,7 @@ if selected == 'Investment Risk Prediction':
         predictions = st.button('Predict')
 
     if predictions:
-        # st.warning("Work under progress...!")
+       
         if Market == 'Emerging Market':
             market_input = 1
         else:
@@ -151,28 +164,144 @@ if selected == 'Investment Risk Prediction':
         # Map class to sentiment
         sentiment_map = {0: -1, 1: 0, 2: 1}
         predicted_sentiment = sentiment_map[predicted_class]
+        # combined_ESG = Total_E + Total_S + Total_G
+    
+        
+        investment_risk=predict_investment_risk(credit_rating_impact,Total_E,Total_S,Total_G,predicted_sentiment)
+        st.write(investment_risk)
 
-        extra_features = np.array([[credit_rating_impact, predicted_sentiment]])
-        scaled_inputs_trimmed = scaled_inputs[:, :-4]
+        # credit_rating_impact_array = np.array([credit_rating_impact]).reshape(1, 1)
+        # predicted_sentiment_array = np.array([predicted_sentiment]).reshape(1, 1)
+        # scaled_inputs_trimmed = scaled_inputs[:, :-4]
 
-        input_with_predictions = np.concatenate((extra_features[0], scaled_inputs_trimmed, extra_features[1]), axis=1)
+        # input_with_predictions = np.hstack((credit_rating_impact_array, scaled_inputs_trimmed, predicted_sentiment_array))
 
-        # input_with_predictions = np.concatenate((input_vector, np.array([[credit_rating_impact, predicted_sentiment]])), axis=1)
+        # input_with_predictions = input_with_predictions.reshape(1, -1)
+        # # st.write("Shape of input_with_predictions:", input_with_predictions.shape)
 
-        invesment_risk = invest(input_with_predictions)
-        descriptions = {
-            0: "Stable Financials, ESG Positive with Positive News Impact - Low to Moderate Investment Risk",
-            1: "Stable Financials with Negative News Impact - Low to Moderate Investment Risk",
-            2: "High Risk, ESG Positive with Positive News Impact - High Investment Risk considering Financial Health",
-            3: "Stable Financials, ESG neutral with Positive News Impact - Low to Moderate Investment Risk",
-            4: "High Risk, ESG neutral with Negative News Impact - High Investment Risk considering Financial Health"
-        }
-        try:
-            predicted_description = descriptions[investment_risk]
-        except KeyError:
-            predicted_description = "Unknown Investment Risk"
+        # # input_with_predictions = np.concatenate((input_vector, np.array([[credit_rating_impact, predicted_sentiment]])), axis=1)
 
-        st.write(predicted_description)
+        # investment_risk = invest.predict(input_with_predictions)
+        # descriptions = {
+        #     0: "Stable Financials, ESG Positive with Positive News Impact - Low to Moderate Investment Risk",
+        #     1: "Stable Financials with Negative News Impact - Low to Moderate Investment Risk",
+        #     2: "High Risk, ESG Positive with Positive News Impact - High Investment Risk considering Financial Health",
+        #     3: "Stable Financials, ESG neutral with Positive News Impact - Low to Moderate Investment Risk",
+        #     4: "High Risk, ESG neutral with Negative News Impact - High Investment Risk considering Financial Health"
+        # }
+        # try:
+        #     predicted_description = descriptions[investment_risk[0]]
+        # except KeyError:
+        #     predicted_description = "Unknown Investment Risk"
+
+        # st.write(predicted_description)
 
     st.success(invest_pred)
+def data_viewer():
+    
+    placeholder.empty()
+    st.title('Detailed View')
+    working_dir = os.path.dirname(os.path.abspath(__file__))
+    df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
+    df_subset = df.sample(n=1000, random_state=42)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    with col1:
+        company = st.selectbox('Select Company (optional)', [' '] + list(df_subset['Company'].unique()))
+        
+    if company != ' ':
+        filtered_df = df_subset[df_subset['Company'] == company]
+    else:
+        with col2:
+            market = st.multiselect('Select Market', df_subset['Market'].unique())
+        with col3:
+            sector = st.multiselect('Select Sector', df_subset['Sector'].unique())
+        
+        filtered_df = df_subset[
+            (df_subset['Market'].isin(market)) &
+            (df_subset['Sector'].isin(sector))
+        ]
+    
+    if not filtered_df.empty:
+        st.write(filtered_df[['Company', 'Region', 'Market', 'Sector', 'COUNTRY_RISK_MARKET_RETURN', 
+                              'COUNTRY_RISK_RFR', 'COUNTRY_RISK_PREMIUM', 'GROSS_MARGIN', 'OPER_MARGIN', 'EPS_GROWTH',
+                              'UNLEVERED_BETA', 'WACC', 'Credit rating impact', 'Total E', 'Total S', 'Total G']].set_index('Company'))
+    else:
+        st.write("No data available for the selected filters.")
+    
+    # st.dataframe(df_subset, use_container_width=True)
+def performance_analysis():
+    working_dir = os.path.dirname(os.path.abspath(__file__))
+    df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
+    df = df.sample(n=1000, random_state=42)
+    
+    st.title('Performance Analysis')
+    companies = st.multiselect('Select Companies (up to two)', list(df['Company'].unique()))
+    # companies = st.multiselect('Select two companies to compare', df['Company'].unique())
+
+    if len(companies) == 2:
+        company1, company2 = companies
+
+        # Get data for the selected companies
+        data = df[df['Company'].isin(companies)].set_index('Company')
+
+        # Define financial metrics to compare
+        financial_metrics = ['COUNTRY_RISK_MARKET_RETURN', 'COUNTRY_RISK_RFR', 'COUNTRY_RISK_PREMIUM',
+                             'GROSS_MARGIN', 'OPER_MARGIN', 'EPS_GROWTH', 'UNLEVERED_BETA', 'WACC', 'Credit rating impact']
+        
+        # Define ESG metrics to compare
+        esg_metrics = ['Total E', 'Total S', 'Total G']
+
+        # Plot bar charts for financial metrics
+        st.subheader("Financial Metrics - Bar Chart")
+        financial_data = data[financial_metrics].T
+        st.bar_chart(financial_data)
+
+        # Plot bar charts for ESG metrics with different colors
+        st.subheader("ESG Metrics - Bar Chart")
+        esg_data = data[esg_metrics].T
+        esg_data.columns = [company1, company2]
+        esg_data.index = ['Environmental (E)', 'Social (S)', 'Governance (G)']
+        st.bar_chart(esg_data)
+
+        # Add legend
+        st.text("Legend:")
+        st.text(f"- {companies[0]}: Blue")
+        st.text(f"- {companies[1]}: Orange")
+    else:
+        st.warning('Please select exactly two companies to compare.')
+
+    
+  
+    
+    
+
+# st.set_page_config(page_title='Comprehensive Investment Risk Analysis', page_icon=':bar_chart:', layout='wide')
+
+with st.sidebar:
+    selected = option_menu(
+        "Comprehensive Investment Risk Analysis",
+        ["InvestiWise:", "Investment Risk Prediction", "Data Viewer", "Performance Analysis"],
+        icons=["house", "graph-up-arrow", "table", "clipboard-data"],
+        menu_icon="cast",
+        default_index=0,
+    )
+
+if selected == "InvestiWise:":
+    home()
+elif selected == "Investment Risk Prediction":
+    investment_risk_prediction()
+elif selected == "Data Viewer":
+    data_viewer()
+elif selected == "Performance Analysis":
+    performance_analysis()
+   
+
+    
+       
+    
+           
+    
+
 
