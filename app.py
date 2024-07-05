@@ -7,6 +7,8 @@ import torch
 import os
 import pandas as pd
 import plotly.graph_objects as go
+import time
+import random
 
 
 st.set_page_config(page_title="InvestiWise",
