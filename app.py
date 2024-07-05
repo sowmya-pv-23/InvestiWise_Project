@@ -274,16 +274,26 @@ def performance_analysis():
         )
         st.plotly_chart(fig1)
         
+        st.subheader("ESG Metrics - Grouped Bar Chart")
+        fig2 = go.Figure()
+        
+        # Add bars for company1
+        fig2.add_trace(go.Bar(
+            x=esg_metrics, 
+            y=data.loc[company1, esg_metrics], 
+            name=company1,
+            marker_color='blue',
+            marker_line=dict(color='black', width=1.5),
+        ))
+        
         # Add bars for company2
-        for metric in esg_metrics:
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company2, metric]], 
-                name=company2 + ' - ' + metric,  # Unique name for each bar
-                marker_color='orange',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=1,  # Ensure bars are grouped correctly
-            ))
+        fig2.add_trace(go.Bar(
+            x=esg_metrics, 
+            y=data.loc[company2, esg_metrics], 
+            name=company2,
+            marker_color='orange',
+            marker_line=dict(color='black', width=1.5),
+        ))
         
         fig2.update_layout(
             barmode='group',  # Group bars
@@ -294,7 +304,6 @@ def performance_analysis():
             # legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
         st.plotly_chart(fig2)
-
         
 
     
