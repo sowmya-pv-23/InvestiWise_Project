@@ -243,65 +243,65 @@ def performance_analysis():
         st.subheader("Financial Metrics - Grouped Bar Chart")
         fig1 = go.Figure()
 
-        for i, metric in enumerate(financial_metrics):
+        for metric in financial_metrics:
             fig1.add_trace(go.Bar(
-            x=[metric], 
-            y=[data.loc[company1, metric]], 
-            name=company1,
-            marker_color='blue',
-            marker_line=dict(color='black', width=1.5),
-            offsetgroup=0,  # Ensure bars are grouped correctly
-        ))
-        fig1.add_trace(go.Bar(
-            x=[metric], 
-            y=[data.loc[company2, metric]], 
-            name=company2,
-            marker_color='orange',
-            marker_line=dict(color='black', width=1.5),
-            offsetgroup=1,  # Ensure bars are grouped correctly
-        ))
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=company1,
+                marker_color='blue',
+                marker_line=dict(color='black', width=1.5),
+                offsetgroup=0,  # Ensure bars are grouped correctly
+            ))
+            fig1.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=company2,
+                marker_color='orange',
+                marker_line=dict(color='black', width=1.5),
+                offsetgroup=1,  # Ensure bars are grouped correctly
+            ))
 
-    fig1.update_layout(
-        barmode='group',  # Group bars
-        xaxis_title="Metrics",
-        yaxis_title="Values",
-        height=600,
-        width=800,
-        legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    )
-    st.plotly_chart(fig1)
+        fig1.update_layout(
+            barmode='group',  # Group bars
+            xaxis_title="Metrics",
+            yaxis_title="Values",
+            height=600,
+            width=800,
+            legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        )
+        st.plotly_chart(fig1)
 
-    # ESG Metrics - Bar Chart
-    st.subheader("ESG Metrics - Grouped Bar Chart")
-    fig2 = go.Figure()
+        # Plot ESG metrics - Grouped Bar Chart
+        st.subheader("ESG Metrics - Grouped Bar Chart")
+        fig2 = go.Figure()
 
-    for i, metric in enumerate(esg_metrics):
-        fig2.add_trace(go.Bar(
-            x=[metric], 
-            y=[data.loc[company1, metric]], 
-            name=company1,
-            marker_color='blue',
-            marker_line=dict(color='black', width=1.5),
-            offsetgroup=0,  # Ensure bars are grouped correctly
-        ))
-        fig2.add_trace(go.Bar(
-            x=[metric], 
-            y=[data.loc[company2, metric]], 
-            name=company2,
-            marker_color='orange',
-            marker_line=dict(color='black', width=1.5),
-            offsetgroup=1,  # Ensure bars are grouped correctly
-        ))
+        for metric in esg_metrics:
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=company1,
+                marker_color='blue',
+                marker_line=dict(color='black', width=1.5),
+                offsetgroup=0,  # Ensure bars are grouped correctly
+            ))
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=company2,
+                marker_color='orange',
+                marker_line=dict(color='black', width=1.5),
+                offsetgroup=1,  # Ensure bars are grouped correctly
+            ))
 
-    fig2.update_layout(
-        barmode='group',  # Group bars
-        xaxis_title="Metrics",
-        yaxis_title="Values",
-        height=600,
-        width=800,
-        legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    )
-    st.plotly_chart(fig2)
+        fig2.update_layout(
+            barmode='group',  # Group bars
+            xaxis_title="Metrics",
+            yaxis_title="Values",
+            height=600,
+            width=800,
+            legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        )
+        st.plotly_chart(fig2)
     
   
     
