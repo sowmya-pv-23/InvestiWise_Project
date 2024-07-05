@@ -241,9 +241,9 @@ def performance_analysis():
 
         # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Grouped Bar Chart")
-    fig1 = go.Figure()
+        fig1 = go.Figure()
 
-    for i, metric in enumerate(financial_metrics):
+        for i, metric in enumerate(financial_metrics):
         fig1.add_trace(go.Bar(
             x=[metric], 
             y=[data.loc[company1, metric]], 
