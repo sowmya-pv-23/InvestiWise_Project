@@ -240,68 +240,68 @@ def performance_analysis():
         esg_metrics = ['Total E', 'Total S', 'Total G']
 
         # Plot bar charts for financial metrics
-        st.subheader("Financial Metrics - Horizontal Bar Chart")
-        fig1 = go.Figure()
-        bar_width = 0.4
-        bar_spacing = 0.1
-        for i, metric in enumerate(financial_metrics):
-            fig1.add_trace(go.Bar(
-                y=[metric], 
-                x=[data.loc[company1, metric]], 
-                name=company1 if i == 0 else "", 
-                marker_color='blue', 
-                marker_line=dict(color='black', width=1.5),
-                width=bar_width,
-                orientation='h',
-                offset=-bar_width/2-bar_spacing
-            ))
-            fig1.add_trace(go.Bar(
-                y=[metric], 
-                x=[data.loc[company2, metric]], 
-                name=company2 if i == 0 else "", 
-                marker_color='orange', 
-                marker_line=dict(color='black', width=1.5),
-                width=bar_width,
-                orientation='h',
-                offset=bar_width/2+bar_spacing
-            ))
-        fig1.update_layout(
-            barmode='overlay',
-            xaxis_title="Values",
-            yaxis_title="Metrics",
-            height=600,  # Increase the height of the figure
-            width=800,   # Increase the width of the figure
-            legend=dict(title="Companies")
-        )
-        st.plotly_chart(fig1)
+        st.subheader("Financial Metrics - Grouped Bar Chart")
+    fig1 = go.Figure()
 
-        # ESG Metrics - Bar Chart
-        st.subheader("ESG Metrics - Bar Chart")
-        fig2 = go.Figure()
-        for i, metric in enumerate(esg_metrics):
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company1, metric]], 
-                name=company1 if i == 0 else "", 
-                marker_color='blue',
-                marker_line=dict(color='black', width=1.5),
-            ))
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company2, metric]], 
-                name=company2 if i == 0 else "", 
-                marker_color='orange',
-                marker_line=dict(color='black', width=1.5),
-            ))
-        fig2.update_layout(
-            barmode='group',
-            yaxis_title="Values",
-            xaxis_title="Metrics",
-            height=600,  # Increase the height of the figure
-            width=800,   # Increase the width of the figure
-            legend=dict(title="Companies")
-        )
-        st.plotly_chart(fig2)
+    for i, metric in enumerate(financial_metrics):
+        fig1.add_trace(go.Bar(
+            x=[metric], 
+            y=[data.loc[company1, metric]], 
+            name=company1,
+            marker_color='blue',
+            marker_line=dict(color='black', width=1.5),
+            offsetgroup=0,  # Ensure bars are grouped correctly
+        ))
+        fig1.add_trace(go.Bar(
+            x=[metric], 
+            y=[data.loc[company2, metric]], 
+            name=company2,
+            marker_color='orange',
+            marker_line=dict(color='black', width=1.5),
+            offsetgroup=1,  # Ensure bars are grouped correctly
+        ))
+
+    fig1.update_layout(
+        barmode='group',  # Group bars
+        xaxis_title="Metrics",
+        yaxis_title="Values",
+        height=600,
+        width=800,
+        legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+    st.plotly_chart(fig1)
+
+    # ESG Metrics - Bar Chart
+    st.subheader("ESG Metrics - Grouped Bar Chart")
+    fig2 = go.Figure()
+
+    for i, metric in enumerate(esg_metrics):
+        fig2.add_trace(go.Bar(
+            x=[metric], 
+            y=[data.loc[company1, metric]], 
+            name=company1,
+            marker_color='blue',
+            marker_line=dict(color='black', width=1.5),
+            offsetgroup=0,  # Ensure bars are grouped correctly
+        ))
+        fig2.add_trace(go.Bar(
+            x=[metric], 
+            y=[data.loc[company2, metric]], 
+            name=company2,
+            marker_color='orange',
+            marker_line=dict(color='black', width=1.5),
+            offsetgroup=1,  # Ensure bars are grouped correctly
+        ))
+
+    fig2.update_layout(
+        barmode='group',  # Group bars
+        xaxis_title="Metrics",
+        yaxis_title="Values",
+        height=600,
+        width=800,
+        legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+    st.plotly_chart(fig2))
     
   
     
