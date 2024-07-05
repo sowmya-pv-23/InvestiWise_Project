@@ -46,7 +46,7 @@ def home():
 
 
 def investment_risk_prediction():
-    placeholder.empty()
+    placeholder=st.empty()
     working_dir = os.path.dirname(os.path.abspath(__file__))
     rule_based_path = os.path.join(working_dir, 'rule_based.py')
     from rule_based import predict_investment_risk
@@ -176,7 +176,7 @@ def investment_risk_prediction():
     st.success(invest_pred)
 def data_viewer():
     
-    placeholder.empty()
+    placeholder=st.empty()
     st.title('Detailed View')
     working_dir = os.path.dirname(os.path.abspath(__file__))
     df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
@@ -223,7 +223,7 @@ def performance_analysis():
     working_dir = os.path.dirname(os.path.abspath(__file__))
     df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
     df = df.sample(n=1000, random_state=42)
-    placeholder.empty()
+    placeholder=st.empty()
     st.title('Performance Analysis')
     companies = st.multiselect('Select Companies (up to two)', list(df['Company'].unique()))
     # companies = st.multiselect('Select two companies to compare', df['Company'].unique())
