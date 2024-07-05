@@ -220,14 +220,16 @@ def data_viewer():
         
         if market and sector:
             filtered_df = df_subset[
-                    (df_subset['Market'].isin(market)) &
-                    (df_subset['Sector'].isin(sector))
-              ]
+                (df_subset['Market'].isin(market)) &
+                (df_subset['Sector'].isin(sector))
+            ]
         elif market:
             filtered_df = df_subset[df_subset['Market'].isin(market)]
         elif sector:
             filtered_df = df_subset[df_subset['Sector'].isin(sector)]
-    
+        else:
+            filtered_df = pd.DataFrame()  # Initialize as empty DataFrame
+
     if not filtered_df.empty:
         st.write(filtered_df[['Company', 'Region', 'Market', 'Sector', 'COUNTRY_RISK_MARKET_RETURN', 
                               'COUNTRY_RISK_RFR', 'COUNTRY_RISK_PREMIUM', 'GROSS_MARGIN', 'OPER_MARGIN', 'EPS_GROWTH',
