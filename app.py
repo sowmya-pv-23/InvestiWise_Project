@@ -264,14 +264,26 @@ def performance_analysis():
         st.subheader("ESG Metrics - Grouped Bar Chart")
         fig2 = go.Figure()
         
+        # Add bars for company1
         for metric in esg_metrics:
             fig2.add_trace(go.Bar(
-                x=[metric, metric], 
-                y=[data.loc[company1, metric], data.loc[company2, metric]], 
-                name=[company1, company2],
-                marker_color=['blue', 'orange'],
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=company1 + ' - ' + metric,  # Unique name for each bar
+                marker_color='blue',
                 marker_line=dict(color='black', width=1.5),
-                offsetgroup=metric,  # Ensure bars are grouped correctly
+                offsetgroup=0,  # Ensure bars are grouped correctly
+            ))
+        
+        # Add bars for company2
+        for metric in esg_metrics:
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=company2 + ' - ' + metric,  # Unique name for each bar
+                marker_color='orange',
+                marker_line=dict(color='black', width=1.5),
+                offsetgroup=1,  # Ensure bars are grouped correctly
             ))
         
         fig2.update_layout(
