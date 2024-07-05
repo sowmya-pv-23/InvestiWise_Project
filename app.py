@@ -230,6 +230,8 @@ def data_viewer():
             filtered_df = df_subset[
             df_subset['Sector'].isin(sector)
          ]
+        else:
+            filtered_df = df_subset
         
     
     if not filtered_df.empty:
