@@ -243,23 +243,30 @@ def performance_analysis():
         st.subheader("Financial Metrics - Grouped Bar Chart")
         fig1 = go.Figure()
 
+        # Define trace names outside the loop
+        trace_name_company1 = company1
+        trace_name_company2 = company2
+
         for metric in financial_metrics:
-            fig1.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company1, metric]], 
-                name=company1,
-                marker_color='blue',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=0,  # Ensure bars are grouped correctly
-            ))
-            fig1.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company2, metric]], 
-                name=company2,
-                marker_color='orange',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=1,  # Ensure bars are grouped correctly
-            ))
+            # Check if trace with the same name exists before adding
+            if trace_name_company1 not in fig1.data:
+                fig1.add_trace(go.Bar(
+                    x=[metric], 
+                    y=[data.loc[company1, metric]], 
+                    name=trace_name_company1,
+                    marker_color='blue',
+                    marker_line=dict(color='black', width=1.5),
+                    offsetgroup=0,  # Ensure bars are grouped correctly
+                ))
+            if trace_name_company2 not in fig1.data:
+                fig1.add_trace(go.Bar(
+                    x=[metric], 
+                    y=[data.loc[company2, metric]], 
+                    name=trace_name_company2,
+                    marker_color='orange',
+                    marker_line=dict(color='black', width=1.5),
+                    offsetgroup=1,  # Ensure bars are grouped correctly
+                ))
 
         fig1.update_layout(
             barmode='group',  # Group bars
@@ -276,22 +283,25 @@ def performance_analysis():
         fig2 = go.Figure()
 
         for metric in esg_metrics:
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company1, metric]], 
-                name=company1,
-                marker_color='blue',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=0,  # Ensure bars are grouped correctly
-            ))
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company2, metric]], 
-                name=company2,
-                marker_color='orange',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=1,  # Ensure bars are grouped correctly
-            ))
+            # Check if trace with the same name exists before adding
+            if trace_name_company1 not in fig2.data:
+                fig2.add_trace(go.Bar(
+                    x=[metric], 
+                    y=[data.loc[company1, metric]], 
+                    name=trace_name_company1,
+                    marker_color='blue',
+                    marker_line=dict(color='black', width=1.5),
+                    offsetgroup=0,  # Ensure bars are grouped correctly
+                ))
+            if trace_name_company2 not in fig2.data:
+                fig2.add_trace(go.Bar(
+                    x=[metric], 
+                    y=[data.loc[company2, metric]], 
+                    name=trace_name_company2,
+                    marker_color='orange',
+                    marker_line=dict(color='black', width=1.5),
+                    offsetgroup=1,  # Ensure bars are grouped correctly
+                ))
 
         fig2.update_layout(
             barmode='group',  # Group bars
