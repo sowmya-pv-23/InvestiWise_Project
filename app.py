@@ -222,22 +222,13 @@ def data_viewer():
             (df_subset['Market'].isin(market)) &
             (df_subset['Sector'].isin(sector))
         ]
-        if market:
-           filtered_df = df_subset[
-            df_subset['Market'].isin(market)
-          ]
-        elif sector:
-            filtered_df = df_subset[
-            df_subset['Sector'].isin(sector)
-         ]
-        
-           
-        elif not filtered_df.empty:
-            st.write(filtered_df[['Company', 'Region', 'Market', 'Sector', 'COUNTRY_RISK_MARKET_RETURN', 
-                                  'COUNTRY_RISK_RFR', 'COUNTRY_RISK_PREMIUM', 'GROSS_MARGIN', 'OPER_MARGIN', 'EPS_GROWTH',
-                                  'UNLEVERED_BETA', 'WACC', 'Credit rating impact', 'Total E', 'Total S', 'Total G']].set_index('Company'))
-        else:
-            st.write("No data available for the selected filters.")
+    
+    if not filtered_df.empty:
+        st.write(filtered_df[['Company', 'Region', 'Market', 'Sector', 'COUNTRY_RISK_MARKET_RETURN', 
+                              'COUNTRY_RISK_RFR', 'COUNTRY_RISK_PREMIUM', 'GROSS_MARGIN', 'OPER_MARGIN', 'EPS_GROWTH',
+                              'UNLEVERED_BETA', 'WACC', 'Credit rating impact', 'Total E', 'Total S', 'Total G']].set_index('Company'))
+    else:
+        st.write("No data available for the selected filters.")
 
    
     # else:
