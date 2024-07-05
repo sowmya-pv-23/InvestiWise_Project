@@ -13,7 +13,7 @@ st.set_page_config(page_title="InvestiWise",
                    layout="wide",
                    page_icon=" ")
 
-placeholder = st.image(r"C:\Users\sowmy\Downloads\istockphoto-1297492947-612x612.jpg")
+placeholder = st.image("/content/ESG.jpg")
 
 
 # working_dir = os.path.dirname(os.path.abspath(__file__))
