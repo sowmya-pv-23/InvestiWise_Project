@@ -241,39 +241,38 @@ def performance_analysis():
         st.subheader("Financial Metrics - Horizontal Bar Chart")
         fig1 = go.Figure()
         
-        for metric in financial_metrics:
-            fig1.add_trace(go.Bar(
-                y=[metric], 
-                x=[data.loc[company1, metric]], 
-                orientation='h',  # Horizontal bar chart
-                name=company1,
-                marker_color='blue',
-                marker_line=dict(color='black', width=1.5),
-            ))
+        # st.subheader("Financial Metrics - Horizontal Bar Chart")
+        # fig1 = go.Figure()
+        
+        # Add bars for company1
+        fig1.add_trace(go.Bar(
+            y=financial_metrics, 
+            x=data.loc[company1, financial_metrics], 
+            orientation='h',  # Horizontal bar chart
+            name=company1,
+            marker_color='blue',
+            marker_line=dict(color='black', width=1.5),
+        ))
+        
+        # Add bars for company2
+        fig1.add_trace(go.Bar(
+            y=financial_metrics, 
+            x=data.loc[company2, financial_metrics], 
+            orientation='h',  # Horizontal bar chart
+            name=company2,
+            marker_color='orange',
+            marker_line=dict(color='black', width=1.5),
+        ))
         
         fig1.update_layout(
+            barmode='group',  # Group bars
             yaxis_title="Metrics",
             xaxis_title="Values",
             height=400,
             width=800,
-            showlegend=False,  # Remove legend for the first chart
+            # legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
         st.plotly_chart(fig1)
-        
-        # ESG Metrics - Grouped Bar Chart
-        st.subheader("ESG Metrics - Grouped Bar Chart")
-        fig2 = go.Figure()
-        
-        # Add bars for company1
-        for metric in esg_metrics:
-            fig2.add_trace(go.Bar(
-                x=[metric], 
-                y=[data.loc[company1, metric]], 
-                name=company1 + ' - ' + metric,  # Unique name for each bar
-                marker_color='blue',
-                marker_line=dict(color='black', width=1.5),
-                offsetgroup=0,  # Ensure bars are grouped correctly
-            ))
         
         # Add bars for company2
         for metric in esg_metrics:
@@ -292,7 +291,7 @@ def performance_analysis():
             yaxis_title="Values",
             height=600,
             width=800,
-            legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            # legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
         st.plotly_chart(fig2)
 
