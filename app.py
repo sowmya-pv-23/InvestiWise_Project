@@ -244,22 +244,54 @@ def performance_analysis():
         fig1 = go.Figure()
         bar_width = 0.4
         for i, metric in enumerate(financial_metrics):
-            fig1.add_trace(go.Bar(x=[i - bar_width/2], y=[data.loc[company1, metric]], name=f"{company1} - {metric}", marker_color=colors[i % len(colors)], width=bar_width))
-            fig1.add_trace(go.Bar(x=[i + bar_width/2], y=[data.loc[company2, metric]], name=f"{company2} - {metric}", marker_color=colors[i % len(colors)], width=bar_width))
+            fig1.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=f"{company1} - {metric}", 
+                marker_color='blue', 
+                width=bar_width
+            ))
+            fig1.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=f"{company2} - {metric}", 
+                marker_color='orange', 
+                width=bar_width
+            ))
+        fig1.update_layout(
+            barmode='group',
+            xaxis_title="Metrics",
+            yaxis_title="Values"
+        )
         st.plotly_chart(fig1)
 
-        # Plot bar charts for ESG metrics
         st.subheader("ESG Metrics - Bar Chart")
         fig2 = go.Figure()
         for metric in esg_metrics:
-            fig2.add_trace(go.Bar(x=[metric], y=[data.loc[company1, metric]], name=company1, marker_color='blue'))
-            fig2.add_trace(go.Bar(x=[metric], y=[data.loc[company2, metric]], name=company2, marker_color='orange'))
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=f"{company1} - {metric}", 
+                marker_color='blue', 
+                width=bar_width
+            ))
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=f"{company2} - {metric}", 
+                marker_color='orange', 
+                width=bar_width
+            ))
+        fig2.update_layout(
+            barmode='group',
+            xaxis_title="Metrics",
+            yaxis_title="Values"
+        )
         st.plotly_chart(fig2)
 
-        # Add legend
         st.text("Legend:")
-        st.text(f"- {companies[0]}: Blue")
-        st.text(f"- {companies[1]}: Orange")
+        st.text(f"- {company1}: Blue")
+        st.text(f"- {company2}: Orange")
     else:
         st.warning('Please select exactly two companies to compare.')
 
