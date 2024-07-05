@@ -6,6 +6,7 @@ from transformers import DistilBertTokenizer, DistilBertForSequenceClassificatio
 import torch
 import os
 import pandas as pd
+import plotly.graph_objects as go
 
 
 st.set_page_config(page_title="InvestiWise",
