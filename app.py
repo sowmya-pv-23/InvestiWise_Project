@@ -238,8 +238,6 @@ def performance_analysis():
         
         # Define ESG metrics to compare
         esg_metrics = ['Total E', 'Total S', 'Total G']
-
-        # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Grouped Bar Chart")
         fig1 = go.Figure()
 
@@ -251,8 +249,8 @@ def performance_analysis():
             # Check if trace with the same name exists before adding
             if trace_name_company1 not in fig1.data:
                 fig1.add_trace(go.Bar(
-                    x=[metric], 
-                    y=[data.loc[company1, metric]], 
+                    y=[metric], 
+                    x=[data.loc[company1, metric]], 
                     name=trace_name_company1,
                     marker_color='blue',
                     marker_line=dict(color='black', width=1.5),
@@ -260,8 +258,8 @@ def performance_analysis():
                 ))
             if trace_name_company2 not in fig1.data:
                 fig1.add_trace(go.Bar(
-                    x=[metric], 
-                    y=[data.loc[company2, metric]], 
+                    y=[metric], 
+                    x=[data.loc[company2, metric]], 
                     name=trace_name_company2,
                     marker_color='orange',
                     marker_line=dict(color='black', width=1.5),
@@ -270,8 +268,8 @@ def performance_analysis():
 
         fig1.update_layout(
             barmode='group',  # Group bars
-            xaxis_title="Metrics",
-            yaxis_title="Values",
+            yaxis_title="Metrics",
+            xaxis_title="Values",
             height=600,
             width=800,
             legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
@@ -312,6 +310,8 @@ def performance_analysis():
             legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
         st.plotly_chart(fig2)
+
+        
 
     
   
