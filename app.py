@@ -218,10 +218,15 @@ def data_viewer():
         with col3:
             sector = st.multiselect('Select Sector', df_subset['Sector'].unique())
         
-        filtered_df = df_subset[
-            (df_subset['Market'].isin(market)) &
-            (df_subset['Sector'].isin(sector))
-        ]
+        if market and sector:
+            filtered_df = df_subset[
+                    (df_subset['Market'].isin(market)) &
+                    (df_subset['Sector'].isin(sector))
+              ]
+        elif market:
+            filtered_df = df_subset[df_subset['Market'].isin(market)]
+        elif sector:
+            filtered_df = df_subset[df_subset['Sector'].isin(sector)]
     
     if not filtered_df.empty:
         st.write(filtered_df[['Company', 'Region', 'Market', 'Sector', 'COUNTRY_RISK_MARKET_RETURN', 
