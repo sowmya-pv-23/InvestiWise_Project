@@ -229,21 +229,9 @@ def data_viewer():
                               'UNLEVERED_BETA', 'WACC', 'Credit rating impact', 'Total E', 'Total S', 'Total G']].set_index('Company'))
     else:
         st.write("No data available for the selected filters.")
-    if market:
-        filtered_df = df[df['Market'].isin(market)]
-        if not filtered_df.empty:
-            sector_counts = filtered_df['Sector'].value_counts()
-            st.write(f"Number of sectors in the selected market(s): {len(sector_counts)}")
-            st.write("Number of companies in each sector:")
-            st.bar_chart(sector_counts)
-    if sector:
-       filtered_df = df[df['Sector'].isin(sector)]
-    if not filtered_df.empty:
-        company_counts = filtered_df.groupby('Sector')['Company'].nunique()
-        st.write("Number of companies in the selected sector(s):")
-        st.bar_chart(company_counts)
-    else:
-        st.write("No data available for the selected market(s).")
+   
+    # else:
+    #     st.write("No data available for the selected market(s).")
     
     # st.dataframe(df_subset, use_container_width=True)
 def performance_analysis():
