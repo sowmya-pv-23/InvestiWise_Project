@@ -229,6 +229,7 @@ def data_viewer():
                               'UNLEVERED_BETA', 'WACC', 'Credit rating impact', 'Total E', 'Total S', 'Total G']].set_index('Company'))
     else:
         st.write("No data available for the selected filters.")
+
    
     # else:
     #     st.write("No data available for the selected market(s).")
