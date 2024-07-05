@@ -7,8 +7,7 @@ import torch
 import os
 import pandas as pd
 import plotly.graph_objects as go
-import time
-import random
+
 
 
 st.set_page_config(page_title="InvestiWise",
@@ -122,7 +121,7 @@ def investment_risk_prediction():
         predictions = st.button('Predict')
 
     if predictions:
-        load_data() 
+        
        
         if Market == 'Emerging Market':
             market_input = 1
@@ -309,32 +308,11 @@ def performance_analysis():
             # legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         )
         st.plotly_chart(fig2)
-quotes = [
-    "The best way to predict the future is to create it. - Abraham Lincoln",
-    "Innovation distinguishes between a leader and a follower. - Steve Jobs",
-    "Stay hungry, stay foolish. - Steve Jobs",
-    "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-    "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt"
-]
 
-
-def display_random_quote():
-    quote = random.choice(quotes)
-    st.text(quote)
-
-
-def load_data():
-    st.text('Loading data...')
-    display_random_quote()
-    time.sleep(5)  # Replace with actual data loading process
-    st.success('Data loaded successfully!')
 
         
 
-    
-  
-    
-    
+
 
 # st.set_page_config(page_title='Comprehensive Investment Risk Analysis', page_icon=':bar_chart:', layout='wide')
 
