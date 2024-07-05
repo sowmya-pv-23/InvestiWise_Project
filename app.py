@@ -249,29 +249,61 @@ def performance_analysis():
     if company1 and company2:
         data = df_subset.set_index('Company')
 
-        # Prepare data for seaborn
-        metrics = financial_metrics
-        values1 = [data.loc[company1, metric] for metric in metrics]
-        values2 = [data.loc[company2, metric] for metric in metrics]
+        st.subheader("Financial Metrics - Bar Chart")
+        fig1 = go.Figure()
+        bar_width = 0.4
+        for i, metric in enumerate(financial_metrics):
+            fig1.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=f"{company1} - {metric}", 
+                marker_color='blue', 
+                width=bar_width
+            ))
+            fig1.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=f"{company2} - {metric}", 
+                marker_color='orange', 
+                width=bar_width
+            ))
+        fig1.update_layout(
+            barmode='group',
+            xaxis_title="Metrics",
+            yaxis_title="Values"
+        )
+        st.plotly_chart(fig1)
 
-        df_plot = pd.DataFrame({
-            'Metric': metrics * 2,
-            'Value': values1 + values2,
-            'Company': [company1] * len(metrics) + [company2] * len(metrics)
-        })
+        st.subheader("ESG Metrics - Bar Chart")
+        fig2 = go.Figure()
+        for metric in esg_metrics:
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company1, metric]], 
+                name=f"{company1} - {metric}", 
+                marker_color='blue', 
+                width=bar_width
+            ))
+            fig2.add_trace(go.Bar(
+                x=[metric], 
+                y=[data.loc[company2, metric]], 
+                name=f"{company2} - {metric}", 
+                marker_color='orange', 
+                width=bar_width
+            ))
+        fig2.update_layout(
+            barmode='group',
+            xaxis_title="Metrics",
+            yaxis_title="Values"
+        )
+        st.plotly_chart(fig2)
 
-        # Plot with seaborn
-        st.subheader("Financial Metrics - Horizontal Bar Chart")
-        plt.figure(figsize=(10, 8))
-        sns.barplot(data=df_plot, y='Metric', x='Value', hue='Company', edgecolor='black')
-        plt.xlabel('Values')
-        plt.ylabel('Metrics')
-        plt.title('Financial Metrics Comparison')
-        plt.legend(title='Companies')
-        st.pyplot(plt)
-
+        st.text("Legend:")
+        st.text(f"- {company1}: Blue")
+        st.text(f"- {company2}: Orange")
     else:
         st.warning('Please select exactly two companies to compare.')
+
     
   
     
