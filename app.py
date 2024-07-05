@@ -46,6 +46,7 @@ def home():
 
 
 def investment_risk_prediction():
+    placeholder.empty()
     working_dir = os.path.dirname(os.path.abspath(__file__))
     rule_based_path = os.path.join(working_dir, 'rule_based.py')
     from rule_based import predict_investment_risk
@@ -53,7 +54,7 @@ def investment_risk_prediction():
     scaler = pickle.load(open(f'{working_dir}/Models/min_max_scaler.pkl', 'rb'))
     model_path = os.path.join(working_dir, 'Models/saved_model')
     tokenizer_path = os.path.join(working_dir, 'Models/DistilBert_Tokenizer')
-    placeholder.empty()
+    
     st.title('Investment Risk Prediction using ML')
     col1, col2, col3 = st.columns([1, 2, 1])
     with col1:
