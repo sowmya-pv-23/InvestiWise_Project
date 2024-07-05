@@ -301,7 +301,7 @@ def performance_analysis():
         width=800,
         legend=dict(title="Companies", orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
-    st.plotly_chart(fig2))
+    st.plotly_chart(fig2)
     
   
     
