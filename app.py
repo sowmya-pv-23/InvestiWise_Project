@@ -244,7 +244,7 @@ def performance_analysis():
         fig1 = go.Figure()
 
         for i, metric in enumerate(financial_metrics):
-        fig1.add_trace(go.Bar(
+            fig1.add_trace(go.Bar(
             x=[metric], 
             y=[data.loc[company1, metric]], 
             name=company1,
