@@ -41,7 +41,7 @@ st.set_page_config(page_title="InvestiWise",
 #                            )
 def home():
     st.title("InvestiWise")
-    st.markdown("<h2 style='color: green;'>Larger Text</h2>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: green;'>A sustainable investment dashboard</h3>", unsafe_allow_html=True)
     placeholder = st.image("/content/Screenshot 2024-06-26 183437.png")
 
 
