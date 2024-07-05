@@ -12,8 +12,9 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="InvestiWise",
                    layout="wide",
                    page_icon=" ")
+placeholder = st.image("/content/images (1).jpg")
 
-placeholder = st.image("/content/ESG.jpg")
+
 
 
 # working_dir = os.path.dirname(os.path.abspath(__file__))
@@ -41,7 +42,7 @@ placeholder = st.image("/content/ESG.jpg")
 def home():
     st.title("InvestiWise")
     st.write("Welcome to InvestiWise: A sustainable Investment Dashboard")
-    placeholder = st.image(r"C:\Users\sowmy\Downloads\istockphoto-1297492947-612x612.jpg")
+    placeholder = st.image("/content/Screenshot 2024-06-26 183437.png")
 
 
 def investment_risk_prediction():
