@@ -242,12 +242,12 @@ def performance_analysis():
         # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Horizontal Bar Chart")
         fig1 = go.Figure()
-        bar_width = 0.4
+        bar_width = 0.2
         for i, metric in enumerate(financial_metrics):
             fig1.add_trace(go.Bar(
                 y=[metric], 
                 x=[data.loc[company1, metric]], 
-                name=f"{company1}", 
+                name=company1 if i == 0 else "", 
                 marker_color='blue', 
                 marker_line=dict(color='black', width=1.5),
                 width=bar_width,
@@ -256,7 +256,7 @@ def performance_analysis():
             fig1.add_trace(go.Bar(
                 y=[metric], 
                 x=[data.loc[company2, metric]], 
-                name=f"{company2}", 
+                name=company2 if i == 0 else "", 
                 marker_color='orange', 
                 marker_line=dict(color='black', width=1.5),
                 width=bar_width,
@@ -268,25 +268,25 @@ def performance_analysis():
             yaxis_title="Metrics",
             height=600,  # Increase the height of the figure
             width=800,   # Increase the width of the figure
-            legend_title="Companies"
+            legend=dict(title="Companies")
         )
         st.plotly_chart(fig1)
 
         # ESG Metrics - Bar Chart
         st.subheader("ESG Metrics - Bar Chart")
         fig2 = go.Figure()
-        for metric in esg_metrics:
+        for i, metric in enumerate(esg_metrics):
             fig2.add_trace(go.Bar(
                 x=[metric], 
                 y=[data.loc[company1, metric]], 
-                name=f"{company1}", 
+                name=company1 if i == 0 else "", 
                 marker_color='blue',
                 marker_line=dict(color='black', width=1.5),
             ))
             fig2.add_trace(go.Bar(
                 x=[metric], 
                 y=[data.loc[company2, metric]], 
-                name=f"{company2}", 
+                name=company2 if i == 0 else "", 
                 marker_color='orange',
                 marker_line=dict(color='black', width=1.5),
             ))
@@ -296,7 +296,7 @@ def performance_analysis():
             xaxis_title="Metrics",
             height=600,  # Increase the height of the figure
             width=800,   # Increase the width of the figure
-            legend_title="Companies"
+            legend=dict(title="Companies")
         )
         st.plotly_chart(fig2)
 
