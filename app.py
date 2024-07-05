@@ -171,32 +171,6 @@ def investment_risk_prediction():
         investment_risk=predict_investment_risk(credit_rating_impact,Total_E,Total_S,Total_G,predicted_sentiment)
         st.write(investment_risk)
 
-        # credit_rating_impact_array = np.array([credit_rating_impact]).reshape(1, 1)
-        # predicted_sentiment_array = np.array([predicted_sentiment]).reshape(1, 1)
-        # scaled_inputs_trimmed = scaled_inputs[:, :-4]
-
-        # input_with_predictions = np.hstack((credit_rating_impact_array, scaled_inputs_trimmed, predicted_sentiment_array))
-
-        # input_with_predictions = input_with_predictions.reshape(1, -1)
-        # # st.write("Shape of input_with_predictions:", input_with_predictions.shape)
-
-        # # input_with_predictions = np.concatenate((input_vector, np.array([[credit_rating_impact, predicted_sentiment]])), axis=1)
-
-        # investment_risk = invest.predict(input_with_predictions)
-        # descriptions = {
-        #     0: "Stable Financials, ESG Positive with Positive News Impact - Low to Moderate Investment Risk",
-        #     1: "Stable Financials with Negative News Impact - Low to Moderate Investment Risk",
-        #     2: "High Risk, ESG Positive with Positive News Impact - High Investment Risk considering Financial Health",
-        #     3: "Stable Financials, ESG neutral with Positive News Impact - Low to Moderate Investment Risk",
-        #     4: "High Risk, ESG neutral with Negative News Impact - High Investment Risk considering Financial Health"
-        # }
-        # try:
-        #     predicted_description = descriptions[investment_risk[0]]
-        # except KeyError:
-        #     predicted_description = "Unknown Investment Risk"
-
-        # st.write(predicted_description)
-
     st.success(invest_pred)
 def data_viewer():
     
@@ -268,9 +242,10 @@ def performance_analysis():
         # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Bar Chart")
         fig1 = go.Figure()
-        for metric in financial_metrics:
-            fig1.add_trace(go.Bar(x=[metric], y=[data.loc[company1, metric]], name=company1, marker_color='blue'))
-            fig1.add_trace(go.Bar(x=[metric], y=[data.loc[company2, metric]], name=company2, marker_color='orange'))
+        bar_width = 0.4
+        for i, metric in enumerate(financial_metrics):
+            fig1.add_trace(go.Bar(x=[i - bar_width/2], y=[data.loc[company1, metric]], name=f"{company1} - {metric}", marker_color=colors[i % len(colors)], width=bar_width))
+            fig1.add_trace(go.Bar(x=[i + bar_width/2], y=[data.loc[company2, metric]], name=f"{company2} - {metric}", marker_color=colors[i % len(colors)], width=bar_width))
         st.plotly_chart(fig1)
 
         # Plot bar charts for ESG metrics
