@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="InvestiWise",
                    layout="wide",
                    page_icon=" ")
-placeholder = st.image("/content/images (1).jpg")
+# placeholder = st.image("/content/images (1).jpg")
 
 
 
@@ -41,7 +41,7 @@ placeholder = st.image("/content/images (1).jpg")
 #                            )
 def home():
     st.title("InvestiWise")
-    st.write("Welcome to InvestiWise: A sustainable Investment Dashboard")
+    st.markdown("<h2 style='color: green;'>Larger Text</h2>", unsafe_allow_html=True)
     placeholder = st.image("/content/Screenshot 2024-06-26 183437.png")
 
 
@@ -222,7 +222,7 @@ def performance_analysis():
     working_dir = os.path.dirname(os.path.abspath(__file__))
     df = pd.read_csv(os.path.join(working_dir, 'Datasets/Visual_ESG_DATASET.csv'))
     df = df.sample(n=1000, random_state=42)
-    
+    placeholder.empty()
     st.title('Performance Analysis')
     companies = st.multiselect('Select Companies (up to two)', list(df['Company'].unique()))
     # companies = st.multiselect('Select two companies to compare', df['Company'].unique())
