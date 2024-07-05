@@ -266,15 +266,19 @@ def performance_analysis():
 
         # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Bar Chart")
-        financial_data = data[financial_metrics].T
-        st.bar_chart(financial_data)
+        fig1 = go.Figure()
+        for metric in financial_metrics:
+            fig1.add_trace(go.Bar(x=[metric], y=[data.loc[company1, metric]], name=company1, marker_color='blue'))
+            fig1.add_trace(go.Bar(x=[metric], y=[data.loc[company2, metric]], name=company2, marker_color='orange'))
+        st.plotly_chart(fig1)
 
-        # Plot bar charts for ESG metrics with different colors
+        # Plot bar charts for ESG metrics
         st.subheader("ESG Metrics - Bar Chart")
-        esg_data = data[esg_metrics].T
-        esg_data.columns = [company1, company2]
-        esg_data.index = ['Environmental (E)', 'Social (S)', 'Governance (G)']
-        st.bar_chart(esg_data)
+        fig2 = go.Figure()
+        for metric in esg_metrics:
+            fig2.add_trace(go.Bar(x=[metric], y=[data.loc[company1, metric]], name=company1, marker_color='blue'))
+            fig2.add_trace(go.Bar(x=[metric], y=[data.loc[company2, metric]], name=company2, marker_color='orange'))
+        st.plotly_chart(fig2)
 
         # Add legend
         st.text("Legend:")
