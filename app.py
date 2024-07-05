@@ -242,7 +242,8 @@ def performance_analysis():
         # Plot bar charts for financial metrics
         st.subheader("Financial Metrics - Horizontal Bar Chart")
         fig1 = go.Figure()
-        bar_width = 0.2
+        bar_width = 0.4
+        bar_spacing = 0.1
         for i, metric in enumerate(financial_metrics):
             fig1.add_trace(go.Bar(
                 y=[metric], 
@@ -251,7 +252,8 @@ def performance_analysis():
                 marker_color='blue', 
                 marker_line=dict(color='black', width=1.5),
                 width=bar_width,
-                orientation='h'
+                orientation='h',
+                offset=-bar_width/2-bar_spacing
             ))
             fig1.add_trace(go.Bar(
                 y=[metric], 
@@ -260,10 +262,11 @@ def performance_analysis():
                 marker_color='orange', 
                 marker_line=dict(color='black', width=1.5),
                 width=bar_width,
-                orientation='h'
+                orientation='h',
+                offset=bar_width/2+bar_spacing
             ))
         fig1.update_layout(
-            barmode='group',
+            barmode='overlay',
             xaxis_title="Values",
             yaxis_title="Metrics",
             height=600,  # Increase the height of the figure
@@ -299,14 +302,6 @@ def performance_analysis():
             legend=dict(title="Companies")
         )
         st.plotly_chart(fig2)
-
-        # Add legend once
-        st.text("Legend:")
-        st.text(f"- {company1}: Blue")
-        st.text(f"- {company2}: Orange")
-    else:
-        st.warning('Please select exactly two companies to compare.')
-
     
   
     
